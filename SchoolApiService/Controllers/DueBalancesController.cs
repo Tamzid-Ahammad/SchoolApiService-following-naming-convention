@@ -48,7 +48,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(dueBalance).State = (System.Data.Entity.EntityState)EntityState.Modified;
+			_context.Entry(dueBalance).State =EntityState.Modified;
 
 			try
 			{

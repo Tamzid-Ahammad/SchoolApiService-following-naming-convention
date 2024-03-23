@@ -56,7 +56,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(examSchedule).State = (System.Data.Entity.EntityState)EntityState.Modified;
+			_context.Entry(examSchedule).State = EntityState.Modified;
 
 			try
 			{

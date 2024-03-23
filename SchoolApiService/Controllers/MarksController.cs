@@ -72,7 +72,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest($"Invalid SubjectId: {mark.SubjectId}. The specified subject does not exist in the database.");
 			}
 
-			_context.Entry(mark).State = (System.Data.Entity.EntityState)EntityState.Modified;
+			_context.Entry(mark).State =EntityState.Modified;
 
 			try
 			{

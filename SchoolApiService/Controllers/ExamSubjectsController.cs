@@ -21,14 +21,14 @@ namespace SchoolApiService.Controllers
 			_context = context;
 		}
 
-		// GET: api/dbsExamSubject
+		// GET: api/ExamSubject
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ExamSubject>>> GetdbsExamSubject()
 		{
 			return await _context.ExamSubjects.ToListAsync();
 		}
 
-		// GET: api/dbsExamSubject/5
+		// GET: api/ExamSubject/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ExamSubject>> GetExamSubject(int id)
 		{
@@ -42,7 +42,7 @@ namespace SchoolApiService.Controllers
 			return examSubject;
 		}
 
-		// PUT: api/dbsExamSubject/5
+		// PUT: api/ExamSubject/5
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutExamSubject(int id, ExamSubject examSubject)
 		{
@@ -51,7 +51,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(examSubject).State = (System.Data.Entity.EntityState)EntityState.Modified;
+			_context.Entry(examSubject).State = EntityState.Modified;
 
 			try
 			{
@@ -72,7 +72,7 @@ namespace SchoolApiService.Controllers
 			return NoContent();
 		}
 
-		// POST: api/dbsExamSubject
+		// POST: api/ExamSubject
 		[HttpPost]
 		public async Task<ActionResult<ExamSubject>> PostExamSubject(ExamSubject examSubject)
 		{
@@ -82,7 +82,7 @@ namespace SchoolApiService.Controllers
 			return CreatedAtAction("GetExamSubject", new { id = examSubject.ExamSubjectId }, examSubject);
 		}
 
-		// DELETE: api/dbsExamSubject/5
+		// DELETE: api/ExamSubject/5
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteExamSubject(int id)
 		{

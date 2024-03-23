@@ -52,7 +52,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(feeType).State = (System.Data.Entity.EntityState)EntityState.Modified;
+			_context.Entry(feeType).State = EntityState.Modified;
 
 			try
 			{

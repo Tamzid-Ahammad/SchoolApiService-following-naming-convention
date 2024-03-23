@@ -1,9 +1,11 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SchoolApiService.Services;
 using SchoolApp.DAL.SchoolContext;
 using System.Text;
 using System.Text.Json.Serialization;

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolApp.DAL.SchoolContext;
 using SchoolApp.Models.DataModels;
 using SchoolApp.Models.ViewModels;
-using System.Data.Entity;
 
 namespace SchoolApiService.Controllers
 {
@@ -19,14 +17,14 @@ namespace SchoolApiService.Controllers
 			_context = context;
 		}
 
-		// GET: api/dbsExamType
+		// GET: api/ExamType
 		[HttpGet]
 		public async Task<IEnumerable<ExamType>> GetdbsExamType()
 		{
 			return await _context.ExamTypes.ToListAsync();
 		}
 
-		// GET: api/dbsExamType/5
+		// GET: api/ExamType/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ExamType>> GetExamType(int id)
 		{
@@ -40,7 +38,7 @@ namespace SchoolApiService.Controllers
 			return examType;
 		}
 
-		// PUT: api/dbsExamType/5
+		// PUT: api/ExamType/5
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutExamType(int id, ExamType examType)
 		{
@@ -49,7 +47,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(examType).State = System.Data.Entity.EntityState.Modified;
+			_context.Entry(examType).State = EntityState.Modified;
 
 			try
 			{
@@ -70,7 +68,7 @@ namespace SchoolApiService.Controllers
 			return NoContent();
 		}
 
-		// POST: api/dbsExamType
+		// POST: api/ExamType
 		[HttpPost]
 		public async Task PostExamType(SaveExamTypeVM examType)
 		{
@@ -81,7 +79,7 @@ namespace SchoolApiService.Controllers
 			await _context.SaveChangesAsync();
 		}
 
-		// DELETE: api/dbsExamType/5
+		// DELETE: api/ExamType/5
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteExamType(int id)
 		{

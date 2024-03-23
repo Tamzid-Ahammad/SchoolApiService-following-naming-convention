@@ -78,7 +78,7 @@ namespace SchoolApiService.Controllers
 				return BadRequest();
 			}
 
-			_context.Entry(feePayment).State = System.Data.Entity.EntityState.Modified;
+			_context.Entry(feePayment).State = EntityState.Modified;
 
 			try
 			{

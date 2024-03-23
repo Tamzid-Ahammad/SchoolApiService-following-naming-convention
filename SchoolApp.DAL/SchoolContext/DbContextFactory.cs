@@ -21,7 +21,7 @@ namespace SchoolApp.DAL.SchoolContext
 		public SchoolDbContext CreateDbContext(string[] args)
 		{
 			var optionBuilder = new DbContextOptionsBuilder<SchoolDbContext>();
-			optionBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=SchoolSystemDb; Trusted_Connection=True;  trust server certificate = true;");
+			optionBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=SChoolManagementSystemDB1; Trusted_Connection=True;  trust server certificate = true;");
 
 			return new SchoolDbContext(optionBuilder.Options);
 
