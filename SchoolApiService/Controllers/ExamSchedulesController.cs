@@ -98,7 +98,7 @@ namespace SchoolApiService.Controllers
 						var examSubject = new ExamSubject
 						{
 							SubjectId = subjectId,
-							
+							ExamScheduleId = examSchedule.ExamScheduleId
 						};
 						_context.ExamSubjects.Add(examSubject);
 					}

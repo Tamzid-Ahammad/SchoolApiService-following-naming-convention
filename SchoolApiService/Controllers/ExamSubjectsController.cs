@@ -74,7 +74,7 @@ namespace SchoolApiService.Controllers
 					// Update properties of the existing exam subject
 					existingExamSubject.ExamDate = updatedExamSubject.ExamDate;
 					existingExamSubject.SubjectId = updatedExamSubject.SubjectId;
-					
+					existingExamSubject.ExamScheduleId = updatedExamSubject.ExamScheduleId;
 
 					// Save changes to the database
 					await _context.SaveChangesAsync();
@@ -110,7 +110,7 @@ namespace SchoolApiService.Controllers
 				{
 					ExamDate = examSubjectRequest.ExamDate,
 					SubjectId = examSubjectRequest.SubjectId,
-					
+					ExamScheduleId = examSubjectRequest.ExamScheduleId
 				};
 
 				// Add the ExamSubject to the context
