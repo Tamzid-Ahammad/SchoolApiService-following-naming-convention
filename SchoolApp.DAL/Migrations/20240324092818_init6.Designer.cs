@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolApp.DAL.SchoolContext;
 
@@ -11,9 +12,11 @@ using SchoolApp.DAL.SchoolContext;
 namespace SchoolApp.DAL.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324092818_init6")]
+    partial class init6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -922,13 +925,15 @@ namespace SchoolApp.DAL.Migrations
 
             modelBuilder.Entity("SchoolApp.Models.DataModels.ExamSubject", b =>
                 {
-                    b.HasOne("SchoolApp.Models.DataModels.ExamSchedule", null)
+                    b.HasOne("SchoolApp.Models.DataModels.ExamSchedule", "ExamSchedule")
                         .WithMany("ExamSubjects")
                         .HasForeignKey("ExamScheduleId");
 
                     b.HasOne("SchoolApp.Models.DataModels.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId");
+
+                    b.Navigation("ExamSchedule");
 
                     b.Navigation("Subject");
                 });

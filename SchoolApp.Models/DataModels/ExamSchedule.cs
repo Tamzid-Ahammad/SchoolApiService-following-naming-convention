@@ -16,6 +16,7 @@ namespace SchoolApp.Models.DataModels
 		public int ExamScheduleId { get; set; }
 		public string? ExamScheduleName { get; set; }
 		public int? ExamTypeId { get; set; }
+		public IEnumerable<int>? SubjectId { get; set; }
 		public ExamType? ExamType { get; set; }
 
 		public virtual ICollection<ExamSubject>? ExamSubjects { get; set; }

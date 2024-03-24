@@ -23,16 +23,24 @@ namespace SchoolApiService.Controllers
 
 		// GET: api/ExamSubject
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<ExamSubject>>> GetdbsExamSubject()
+		public async Task<ActionResult<IEnumerable<ExamSubject>>> GetExamSubjects()
 		{
-			return await _context.ExamSubjects.ToListAsync();
+			var examSubjects = await _context.ExamSubjects
+				.Include(es => es.Subject)
+				.AsNoTracking()
+				.ToListAsync();
+
+			return examSubjects;
 		}
 
 		// GET: api/ExamSubject/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<ExamSubject>> GetExamSubject(int id)
 		{
-			var examSubject = await _context.ExamSubjects.FindAsync(id);
+			var examSubject = await _context.ExamSubjects
+				.Include(es => es.Subject)
+				.AsNoTracking()
+				.FirstOrDefaultAsync(es => es.ExamSubjectId == id);
 
 			if (examSubject == null)
 			{
@@ -42,45 +50,86 @@ namespace SchoolApiService.Controllers
 			return examSubject;
 		}
 
-		// PUT: api/ExamSubject/5
+
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutExamSubject(int id, ExamSubject examSubject)
+		public async Task<IActionResult> UpdateExamSubject(int id, [FromBody] ExamSubject updatedExamSubject)
 		{
-			if (id != examSubject.ExamSubjectId)
+			if (!ModelState.IsValid)
 			{
-				return BadRequest();
+				return BadRequest(ModelState);
 			}
 
-			_context.Entry(examSubject).State = EntityState.Modified;
-
-			try
+			using (var transaction = _context.Database.BeginTransaction())
 			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!ExamSubjectExists(id))
+				try
 				{
-					return NotFound();
+					var existingExamSubject = await _context.ExamSubjects
+						.FirstOrDefaultAsync(es => es.ExamSubjectId == id);
+
+					if (existingExamSubject == null)
+					{
+						return NotFound($"ExamSubject with ID {id} not found.");
+					}
+
+					// Update properties of the existing exam subject
+					existingExamSubject.ExamDate = updatedExamSubject.ExamDate;
+					existingExamSubject.SubjectId = updatedExamSubject.SubjectId;
+					
+
+					// Save changes to the database
+					await _context.SaveChangesAsync();
+
+					transaction.Commit();
+
+					return Ok(existingExamSubject);
 				}
-				else
+				catch (Exception ex)
 				{
-					throw;
+					Console.WriteLine($"Exception: {ex}");
+
+					transaction.Rollback();
+					return StatusCode(500, $"Internal Server Error: {ex.Message}");
 				}
 			}
-
-			return NoContent();
 		}
+
 
 		// POST: api/ExamSubject
 		[HttpPost]
-		public async Task<ActionResult<ExamSubject>> PostExamSubject(ExamSubject examSubject)
+		public async Task<ActionResult<ExamSubject>> PostExamSubject(ExamSubject examSubjectRequest)
 		{
-			_context.ExamSubjects.Add(examSubject);
-			await _context.SaveChangesAsync();
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-			return CreatedAtAction("GetExamSubject", new { id = examSubject.ExamSubjectId }, examSubject);
+			try
+			{
+				// Create a new ExamSubject object
+				var examSubject = new ExamSubject
+				{
+					ExamDate = examSubjectRequest.ExamDate,
+					SubjectId = examSubjectRequest.SubjectId,
+					
+				};
+
+				// Add the ExamSubject to the context
+				_context.ExamSubjects.Add(examSubject);
+
+				// Save changes to the database
+				await _context.SaveChangesAsync();
+
+				// Return a 201 Created response with the created ExamSubject
+				return CreatedAtAction(nameof(GetExamSubject), new { id = examSubject.ExamSubjectId }, examSubject);
+			}
+			catch (DbUpdateException ex)
+			{
+				// Log the exception or handle it as per your application's requirement
+				// For example, you can return a specific error message to the client
+				return StatusCode(500, $"An error occurred while saving the ExamSubject: {ex.Message}");
+			}
 		}
+
 
 		// DELETE: api/ExamSubject/5
 		[HttpDelete("{id}")]

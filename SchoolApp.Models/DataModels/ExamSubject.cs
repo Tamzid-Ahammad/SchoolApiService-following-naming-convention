@@ -17,9 +17,9 @@ namespace SchoolApp.Models.DataModels
 		public DateTime? ExamDate { get; set; } = DateTime.Now;
 
 		public int? SubjectId { get; set; }
-		public int? ExamScheduleId { get; set; }
+	
 
 		public Subject? Subject { get; set; }
-		public ExamSchedule? ExamSchedule { get; set; }
+		
 	}
 }
